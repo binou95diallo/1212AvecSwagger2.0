@@ -13,7 +13,8 @@ class EntrepriseMapping {
         $domaines = array();
         if($domaines_entreprise){
             foreach ($domaines_entreprise as  $domaine_entreprise){
-                $domaines[] = $domaine_entreprise->getNom();
+                $domaines[] = array('id'=>$domaine_entreprise->getId(),
+                                    'nom'=>$domaine_entreprise->getNom());
             }
         }
         return $domaines;
@@ -58,7 +59,8 @@ class EntrepriseMapping {
         $liste_regions = array();
         if($regions){
             foreach ($regions as $region){
-                $liste_regions[] = $region->getLibelle();
+                $liste_regions[] =array('id'=> $region->getId(),
+                                         'nom'=> $region->getLibelle());
             }
         }
         return  $liste_regions;
