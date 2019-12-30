@@ -30,17 +30,35 @@ class EntrepriseMapping {
         }
         return $liste_numeros;
     }
-    public function getlisteAgences($agences_entreprise) {
+    public function getlisteAgences($agences_entreprise){
         $agences = array();
         if($agences_entreprise){
             foreach ($agences_entreprise as  $agence_entreprise){
                 $agences[] = array('id'=>$agence_entreprise->getId(),
                                    'nom'=> $agence_entreprise->getNom(),
                                    'adresse'=>$agence_entreprise->getAdresse(),
+                                   'localite'=>$agence_entreprise->getEntreprise()->getLocalite()->getLibelle(),
+                                   'latittude'=>$agence_entreprise->getEntreprise()->getLatitude(),
+                                   'longitude'=>$agence_entreprise->getEntreprise()->getLongitude(),
                                    'fixe'=>$agence_entreprise->getFixe());
             }
+            return new JsonResponse([$this->success=>true,
+                                    $this->data=$agences]);
         }
-        return $agences;
+    }
+    public function getlisteNumeroAssistants($numeroAssistants){
+        $assistants = array();
+        if(isset($numeroAssistants) && is_array($numeroAssistants)){
+            foreach ($numeroAssistants as  $numero){
+                $assistants[] = array('id'=>$numero->getId(),
+                                      'numero'=> $numero->getNumero(),
+                                      'libelle'=>$numero->getLibelle()
+                                     );
+            }
+            
+        return new JsonResponse([$this->success=>true,
+        $this->data=$assistants]);
+        }
     }
     public function getlisteHoraires($horaires_entreprise) {
         $horaires = array();

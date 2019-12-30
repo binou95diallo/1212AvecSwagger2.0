@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Publicite;
+use App\Form\PubliciteType;
+use App\Mapping\EntrepriseMapping;
+use App\Mapping\PubMapping;
+use Doctrine\ORM\EntityManager;
+use App\Mapping\PubliciteMapping;
+use App\Repository\AgenceRepository;
+use App\Repository\AssistantsRepository;
+use App\Repository\PubliciteRepository;
+use JMS\Serializer\SerializerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class DataController extends AbstractController
+{
+    protected $success = 'success';
+    protected $message = 'message';
+    protected $data = 'data';
+    protected $code='code';
+    /**
+     * @Rest\Post("/makePub", name="makePub")
+     */
+    public function makePub(Request $request,EntityManagerInterface $em)
+    {
+        $pub=new Publicite();
+        $form = $this->createForm(PubliciteType::class, $pub);
+        $form->handleRequest($request);
+        $value=$request->request->all();
+        $form->submit($value);
+        if($form->isSubmitted()){
+            $em->persist($pub);
+            $em->flush();
+            return new JsonResponse([$this->success=>true,$this->code=>201,$this->message=>'enregistrement d\'une publicite reussie' ]);
+        }
+    }
+
+    /**
+     * @Rest\Post("/pub", name="pub")
+     */
+    public function pub(Request $request,EntityManagerInterface $em,PubliciteRepository $publiciteRepository)
+    {
+        $value=$request->request->all();
+        $pubId=$value["idPub"];
+        $pub=$publiciteRepository->find($pubId);
+        $pubMapping=new PubMapping();
+        return $pubMapping->getPublicite($pub);
+    }
+
+     /**
+     * @Rest\Get("/listeAgences", name="listeAgences")
+     */
+    public function listeAgences(AgenceRepository $agenceRepository)
+    {
+        $listeAgence=$agenceRepository->findAll();
+        $entrepriseMapping=new EntrepriseMapping();
+        return $entrepriseMapping->getlisteAgences($listeAgence);
+    }
+    /**
+    * @Rest\Get("/listeAssistants", name="listeAssistants")
+    */
+   public function listeNumerosAssistant(AssistantsRepository $assistantsRepository)
+   {
+       $listeAssistant=$assistantsRepository->findAll();
+       $entrepriseMapping=new EntrepriseMapping();
+       return $entrepriseMapping->getlisteNumeroAssistants($listeAssistant);
+   }
+}

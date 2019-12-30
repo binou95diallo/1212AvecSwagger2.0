@@ -34,7 +34,29 @@ class EntrepriseRepository extends ServiceEntityRepository
 	        ->getQuery()
 	        ->getResult();
     }
-    public function  search($nom,$region,$domaine){
+    /* public function search($nom,$region,$domaine,$parentId){
+        $conn = $this->getEntityManager()->getConnection();
+        if($nom!=null && $region!=null && $domaine!=null){
+            $sql = 'SELECT entreprise.nom from entreprise,localite,domaine,type_localite, entreprise_domaine as ed
+                   where entreprise.nom like "'.$nom.'" and localite.libelle like "'.$region.'" 
+                    and domaine.nom like "'.$domaine.'" and ed.entreprise_id=entreprise.id and ed.domaine_id=domaine.id
+                    and localite.parent_id="'.$parentId.'"
+                    and entreprise.localite_id=localite.id
+                   ';
+        }elseif($nom!=null && $region!=null && $domaine==null){
+            $sql = 'SELECT entreprise.nom from entreprise,localite,type_localite
+                   where entreprise.nom="'.$nom.'" and localite.libelle="'.$region.'" and localite.parent_id="$parentId"
+                   and entreprise.localite_id=localite.id
+                   ';
+        }
+       
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+ */
+    public function search($nom,$region,$domaine){
         $query = $this->createQueryBuilder('e') 
         ->leftJoin('e.localite', 'l')
         ->leftJoin('l.type_localite', 't')
@@ -45,7 +67,7 @@ class EntrepriseRepository extends ServiceEntityRepository
          $query->andWhere('l.libelle  LIKE :region')
                ->andWhere('t.id  =:id')
                ->setParameter('region', '%'.$region.'%')
-               ->setParameter('id', 1);
+               ->setParameter('id', 2);
         }
         if($domaine!=null){
             $query->andWhere('d.nom  LIKE :domaine')

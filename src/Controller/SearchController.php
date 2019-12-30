@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use App\Mapping\SearchMapping;
+use App\Repository\EntrepriseRepository;
 
 class SearchController extends FOSRestController implements ClassResourceInterface
 {
@@ -18,12 +19,12 @@ class SearchController extends FOSRestController implements ClassResourceInterfa
      * @Rest\Post("/recherche")
      * @return JsonResponse
      */
-    public function searchEntreprise(Request $request) {
+    public function searchEntreprise(Request $request,EntrepriseRepository $entrepriseRepository) {
         $data=$request->request->all();
         $nom = $data['nom'];
         $region = $data['region'];      
         $domaine = $data['domaine'];    
-        $liste_entreprise = $this->getDoctrine()->getRepository(Entreprise::class)->search($nom,$region,$domaine);
+        $liste_entreprise = $entrepriseRepository->search($nom,$region,$domaine);
         $searchMapping = new SearchMapping();
         return $searchMapping->listeEntreprise( $liste_entreprise);
     }
