@@ -119,7 +119,7 @@ class Entreprise
     private $domaine;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Horaires", inversedBy="entreprise", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Horaires", inversedBy="entreprises")
      */
     private $horaire;
 
@@ -411,6 +411,32 @@ class Entreprise
     }
 
     /**
+     * @return Collection|Horaire[]
+     */
+    public function getHoraire(): Collection
+    {
+        return $this->horaire;
+    }
+
+    public function addHoraire(Horaires $horaire): self
+    {
+        if (!$this->horaire->contains($horaire)) {
+            $this->horaire[] = $horaire;
+        }
+
+        return $this;
+    }
+
+    public function removeHoraire(Horaires $horaire): self
+    {
+        if ($this->horaire->contains($horaire)) {
+            $this->horaire->removeElement($horaire);
+        }
+
+        return $this;
+    }
+
+   /**
      * @return Collection|Domaine[]
      */
     public function getDomaine(): Collection
@@ -432,18 +458,6 @@ class Entreprise
         if ($this->domaine->contains($domaine)) {
             $this->domaine->removeElement($domaine);
         }
-
-        return $this;
-    }
-
-    public function getHoraire(): ?Horaires
-    {
-        return $this->horaire;
-    }
-
-    public function setHoraire(?Horaires $horaire): self
-    {
-        $this->horaire = $horaire;
 
         return $this;
     }

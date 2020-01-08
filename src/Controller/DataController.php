@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\ListeIndicatifs;
 use App\Entity\Publicite;
 use App\Form\PubliciteType;
 use App\Mapping\EntrepriseMapping;
+use App\Mapping\IndicatifMapping;
 use App\Mapping\PubMapping;
 use Doctrine\ORM\EntityManager;
 use App\Mapping\PubliciteMapping;
 use App\Repository\AgenceRepository;
 use App\Repository\AssistantsRepository;
+use App\Repository\ListeIndicatifsRepository;
 use App\Repository\PubliciteRepository;
 use JMS\Serializer\SerializerInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -72,4 +75,21 @@ class DataController extends AbstractController
        $entrepriseMapping=new EntrepriseMapping();
        return $entrepriseMapping->getlisteNumeroAssistants($listeAssistant);
    }
+   
+    /**
+     * @Rest\Post("/indicatifs", name="rechercheIndicatifs")
+     */
+    public function indicatifsPays(Request $request,ListeIndicatifsRepository $listeIndicatifsRepository){
+        $value=$request->request->all();
+        $pays=$value["pays"];
+        if($pays!=null){
+            $indicatif=$listeIndicatifsRepository->findOneBy(["pays"=>$pays]);
+            $indicatifsMapping=new IndicatifMapping();
+            return $indicatifsMapping->getIndicatif($indicatif);
+        }else{
+            $indicatifs=$listeIndicatifsRepository->findAll();
+            $indicatifsMapping=new IndicatifMapping();
+            return $indicatifsMapping->getlisteIndicatifs($indicatifs);
+        }
+    }
 }

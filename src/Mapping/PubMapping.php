@@ -19,4 +19,5 @@ class PubMapping {
                                 'description'=>$pub->getDescription()
             ]);
     }
+    
 }   

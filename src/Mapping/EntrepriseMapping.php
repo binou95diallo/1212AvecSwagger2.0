@@ -63,13 +63,11 @@ class EntrepriseMapping {
     public function getlisteHoraires($horaires_entreprise) {
         $horaires = array();
         if($horaires_entreprise){
-                $horaires[] = array('lundi'=>$horaires_entreprise->getLundi(),
-                                    'mardi'=>$horaires_entreprise->getMardi(),
-                                    'mercredi'=>$horaires_entreprise->getMercredi(),
-                                    'jeudi'=>$horaires_entreprise->getJeudi(),
-                                    'vendredi'=>$horaires_entreprise->getVendredi(),
-                                    'samedi'=>$horaires_entreprise->getSamedi(),
-                                    'dimanche'=>$horaires_entreprise->getDimanche());
+            foreach($horaires_entreprise as $horaire){
+                $horaires[] = array('heureOuverture'=>$horaire->getHeureOuverture(),
+                                    'heureFermeture'=>$horaire->getHeureFermeture(),
+                                    'jour'=>$horaire->getJour());
+            }
         }
         return $horaires;
     }

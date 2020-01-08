@@ -18,45 +18,30 @@ class Horaires
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $lundi;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+   /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Entreprise", mappedBy="horaire")
      */
-    private $mardi;
+    private $entreprises;
+
+    public function __construct()
+    {
+        $this->entreprises = new ArrayCollection();
+    }
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $heureOuverture;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $mercredi;
+    private $heureFermeture;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $jeudi;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $vendredi;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $samedi;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $dimanche;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Entreprise", mappedBy="horaire", cascade={"persist", "remove"})
-     */
-    private $entreprise;
+    private $jour;
 
     
 
@@ -65,104 +50,66 @@ class Horaires
         return $this->id;
     }
 
-    public function getLundi(): ?string
+    /**
+     * @return Collection|Entreprise[]
+     */
+    public function getEntreprises(): Collection
     {
-        return $this->lundi;
+        return $this->entreprises;
     }
 
-    public function setLundi(?string $lundi): self
+    public function addEntreprise(Entreprise $entreprise): self
     {
-        $this->lundi = $lundi;
-
-        return $this;
-    }
-
-    public function getMardi(): ?string
-    {
-        return $this->mardi;
-    }
-
-    public function setMardi(?string $mardi): self
-    {
-        $this->mardi = $mardi;
-
-        return $this;
-    }
-
-    public function getMercredi(): ?string
-    {
-        return $this->mercredi;
-    }
-
-    public function setMercredi(string $mercredi): self
-    {
-        $this->mercredi = $mercredi;
-
-        return $this;
-    }
-
-    public function getJeudi(): ?string
-    {
-        return $this->jeudi;
-    }
-
-    public function setJeudi(?string $jeudi): self
-    {
-        $this->jeudi = $jeudi;
-
-        return $this;
-    }
-
-    public function getVendredi(): ?string
-    {
-        return $this->vendredi;
-    }
-
-    public function setVendredi(?string $vendredi): self
-    {
-        $this->vendredi = $vendredi;
-
-        return $this;
-    }
-
-    public function getSamedi(): ?string
-    {
-        return $this->samedi;
-    }
-
-    public function setSamedi(?string $samedi): self
-    {
-        $this->samedi = $samedi;
-
-        return $this;
-    }
-
-    public function getDimanche(): ?string
-    {
-        return $this->dimanche;
-    }
-
-    public function setDimanche(?string $dimanche): self
-    {
-        $this->dimanche = $dimanche;
-
-        return $this;
-    }
-
-    public function getEntreprise(): ?Entreprise
-    {
-        return $this->entreprise;
-    }
-
-    public function setEntreprise(?Entreprise $entreprise): self
-    {
-        $this->entreprise = $entreprise;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newHoraire = null === $entreprise ? null : $this;
-        if ($entreprise->getHoraire() !== $newHoraire) {
-            $entreprise->setHoraire($newHoraire);
+        if (!$this->entreprises->contains($entreprise)) {
+            $this->entreprises[] = $entreprise;
+            $entreprise->addHoraire($this);
         }
+
+        return $this;
+    }
+
+    public function removeEntreprise(Entreprise $entreprise): self
+    {
+        if ($this->entreprises->contains($entreprise)) {
+            $this->entreprises->removeElement($entreprise);
+            $entreprise->removeHoraire($this);
+        }
+
+        return $this;
+    }
+
+    public function getHeureOuverture(): ?string
+    {
+        return $this->heureOuverture;
+    }
+
+    public function setHeureOuverture(string $heureOuverture): self
+    {
+        $this->heureOuverture = $heureOuverture;
+
+        return $this;
+    }
+
+    public function getHeureFermeture(): ?string
+    {
+        return $this->heureFermeture;
+    }
+
+    public function setHeureFermeture(string $heureFermeture): self
+    {
+        $this->heureFermeture = $heureFermeture;
+
+        return $this;
+    }
+
+    public function getJour(): ?string
+    {
+        return $this->jour;
+    }
+
+    public function setJour(string $jour): self
+    {
+        $this->jour = $jour;
 
         return $this;
     }
