@@ -84,6 +84,9 @@ class DataController extends AbstractController
         $pays=$value["pays"];
         if($pays!=null){
             $indicatif=$listeIndicatifsRepository->findOneBy(["pays"=>$pays]);
+            if($indicatif==null){
+                return new JsonResponse([$this->success=>false,$this->code=>105,$this->message=>'nom de pays non existant' ]);
+            }
             $indicatifsMapping=new IndicatifMapping();
             return $indicatifsMapping->getIndicatif($indicatif);
         }else{
