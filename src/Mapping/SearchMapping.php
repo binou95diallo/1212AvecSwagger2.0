@@ -19,6 +19,7 @@ class SearchMapping {
 
                 $liste_entreprises[] = array('id'=>$entreprise->getId(),
                                              'nom'=>$entreprise->getNom(),
+                                             'adresse' => $entreprise->getAdresse(),
                                              'logo'=>$entreprise->getLogo(),
                                              'domaine'=>$domaines,
                                              'fixe'=>$entreprise->getFixe(),

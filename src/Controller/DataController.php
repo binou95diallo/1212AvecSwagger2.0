@@ -46,13 +46,11 @@ class DataController extends AbstractController
     }
 
     /**
-     * @Rest\Post("/pub", name="pub")
+     * @Rest\Get("/pub", name="pub")
      */
     public function pub(Request $request,EntityManagerInterface $em,PubliciteRepository $publiciteRepository)
     {
-        $value=$request->request->all();
-        $pubId=$value["idPub"];
-        $pub=$publiciteRepository->find($pubId);
+        $pub=$publiciteRepository->findAll();
         $pubMapping=new PubMapping();
         return $pubMapping->getPublicite($pub);
     }

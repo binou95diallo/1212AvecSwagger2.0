@@ -9,16 +9,19 @@ class PubMapping {
     protected $message = 'message';
     protected $data = 'data';
 
-    public function getPublicite($pub) {
-       if($pub){
+    public function getPublicite($pubs) {
+       if($pubs){
+           $listes_pub=array();
+           foreach($pubs as $pub){
+                $listes_pub[]=array(
+                    'id' =>$pub->getId(),
+                    'urlImage' =>$pub->getUrlImage(),
+                    'urlSiteWeb'=>$pub->getUrlWebsite(),
+                    'description'=>$pub->getDescription());
+           }
         return new JsonResponse([
             $this->success=>true,
-            $this->data=>array(
-                                'id' =>$pub->getId(),
-                                'urlImage' =>$pub->getUrlImage(),
-                                'urlSiteWeb'=>$pub->getUrlWebsite()),
-                                'description'=>$pub->getDescription()
-            ]);
+            $this->data=>$listes_pub]);
        }
        return new JsonResponse([
         $this->success=>false,
