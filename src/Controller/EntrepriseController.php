@@ -13,26 +13,14 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+Use App\Annotation\QMLogger;
 
 class EntrepriseController extends AbstractFOSRestController implements ClassResourceInterface
 {
-     /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
-    public function __construct(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
-    }
-
-    public function edit()
-    {
-        $this->logger->info('Hey ! I am writing in logs !!');
-        $this->logger->critical('Oops something bad is happening');
-    }
      /**
      * @Rest\Post("/infos_entreprise")
+     * @QMLogger(message="Details entreprise")
      * @return JsonResponse
      */
     public function detailsEntreprise(Request $request) {
@@ -43,6 +31,7 @@ class EntrepriseController extends AbstractFOSRestController implements ClassRes
     }
     /**
      * @Rest\Get("/liste_regions_domaines")
+     * @QMLogger(message="Liste des regions et domaines")
      * @return JsonResponse
      */
     public function filtres(Request $request) {

@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+Use App\Annotation\QMLogger;
 
 class DataController extends AbstractController
 {
@@ -30,6 +31,7 @@ class DataController extends AbstractController
     protected $code='code';
     /**
      * @Rest\Post("/makePub", name="makePub")
+     * @QMLogger(message="Ajouter une publicite")
      */
     public function makePub(Request $request,EntityManagerInterface $em)
     {
@@ -47,6 +49,7 @@ class DataController extends AbstractController
 
     /**
      * @Rest\Get("/pub", name="pub")
+     * @QMLogger(message="Liste des publicites")
      */
     public function pub(Request $request,EntityManagerInterface $em,PubliciteRepository $publiciteRepository)
     {
@@ -57,6 +60,7 @@ class DataController extends AbstractController
 
      /**
      * @Rest\Get("/listeAgences", name="listeAgences")
+     * @QMLogger(message="Liste des agences")
      */
     public function listeAgences(AgenceRepository $agenceRepository)
     {
@@ -66,6 +70,7 @@ class DataController extends AbstractController
     }
     /**
     * @Rest\Get("/listeAssistants", name="listeAssistants")
+    * @QMLogger(message="Liste des numeros services assistances")
     */
    public function listeNumerosAssistant(AssistantsRepository $assistantsRepository)
    {
@@ -76,6 +81,7 @@ class DataController extends AbstractController
    
     /**
      * @Rest\Post("/indicatifs", name="rechercheIndicatifs")
+     * @QMLogger(message="Indicatifs des pays")
      */
     public function indicatifsPays(Request $request,ListeIndicatifsRepository $listeIndicatifsRepository){
         $value=$request->request->all();

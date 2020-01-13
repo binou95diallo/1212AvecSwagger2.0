@@ -11,7 +11,8 @@ class SearchMapping {
         $liste_entreprises = array();
         $domaines = array();
         if($entreprises){
-            foreach ($entreprises as $entreprise){        
+            foreach ($entreprises as $entreprise){    
+                $domaines = array();    
                 $liste_domaines = $entreprise->getDomaine();
                 foreach ($liste_domaines as  $liste_domaine){
                     $domaines[] = $liste_domaine->getNom();

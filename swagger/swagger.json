@@ -1,0 +1,13 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "api annuaire 1212",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "htpps://extra.apis2m.sn/annuaire1212/v1",
+            "description": "api pour la plateforme de gestion d'annuaire des entreprises"
+        }
+    ]
+}

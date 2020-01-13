@@ -13,11 +13,13 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+Use App\Annotation\QMLogger;
 
 class SearchController extends AbstractFOSRestController implements ClassResourceInterface
 {
   /**
      * @Rest\Post("/recherche")
+     * @QMLogger(message="recherche entreprise")
      * @return JsonResponse
      */
     public function searchEntreprise(Request $request,EntrepriseRepository $entrepriseRepository) {
