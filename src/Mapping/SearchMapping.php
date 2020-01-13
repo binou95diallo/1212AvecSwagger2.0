@@ -22,7 +22,7 @@ class SearchMapping {
                                              'logo'=>$entreprise->getLogo(),
                                              'domaine'=>$domaines,
                                              'fixe'=>$entreprise->getFixe(),
-                                             'region'=>$entreprise->getLocalite()->getLibelle(),);
+                                             'region'=>$entreprise->getLocalite()->getLibelle());
             }
         return new JsonResponse([
                     'success'=>true,
@@ -31,6 +31,7 @@ class SearchMapping {
         }
         return new JsonResponse([
             'success'=>false,
+            'code'=>101,
             'message' =>  'Aucune entreprise trouvée',
             ]);
        }

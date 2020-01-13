@@ -2,19 +2,35 @@
 
 namespace App\Controller;
 
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use App\Mapping\EntrepriseMapping;
-use App\Entity\Entreprise;
 use App\Entity\Domaine;
 use App\Entity\Localite;
+use App\Entity\Entreprise;
 use App\Entity\TypeLocalite;
+use Psr\Log\LoggerInterface;
+use App\Mapping\EntrepriseMapping;
+use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Routing\ClassResourceInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 
-class EntrepriseController extends FOSRestController implements ClassResourceInterface
+class EntrepriseController extends AbstractFOSRestController implements ClassResourceInterface
 {
+     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    public function edit()
+    {
+        $this->logger->info('Hey ! I am writing in logs !!');
+        $this->logger->critical('Oops something bad is happening');
+    }
      /**
      * @Rest\Post("/infos_entreprise")
      * @return JsonResponse

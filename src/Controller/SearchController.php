@@ -3,17 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Domaine;
-use App\Entity\Entreprise;
 use App\Entity\Localite;
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Routing\ClassResourceInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use FOS\RestBundle\Controller\Annotations as Rest;
+use App\Entity\Entreprise;
 use App\Mapping\SearchMapping;
 use App\Repository\EntrepriseRepository;
+use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Routing\ClassResourceInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 
-class SearchController extends FOSRestController implements ClassResourceInterface
+class SearchController extends AbstractFOSRestController implements ClassResourceInterface
 {
   /**
      * @Rest\Post("/recherche")

@@ -22,6 +22,24 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+    
+     #monolog config
+    app.formatter:
+        class: App\Service\Formatter
+        public: true
+        arguments: ['@logger']
+        #arguments: [~, ~, true]
+        tags:
+            - { name: monolog.logger, channel: trace }
 
+
+    annuaire1212_annotation_listener:
+        class: App\Listener\AnnotationListener
+        public: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+        arguments: ['@service_container']
+            #- { type: service, id: service_container }
+        
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -8,6 +8,7 @@ class EntrepriseMapping {
     protected $success = 'success';
     protected $message = 'message';
     protected $data = 'data';
+    protected $code='code';
 
     public function getlisteDomaines($domaines_entreprise) {
         $domaines = array();
@@ -16,8 +17,13 @@ class EntrepriseMapping {
                 $domaines[] = array('id'=>$domaine_entreprise->getId(),
                                     'nom'=>$domaine_entreprise->getNom());
             }
+            return $domaines;
         }
-        return $domaines;
+        return new JsonResponse([
+            'success'=>false,
+            'code'=>107,
+            'message' =>  'Aucun domaine trouvé',
+            ]);
     }
     public function getlisteParcsFixe($parcsnumeros) {
         $liste_numeros = array();
@@ -27,8 +33,13 @@ class EntrepriseMapping {
                                          'nom'=>$parcs->getLibelle(),
                                          'numero'=>$parcs->getNumero());
             }
+            return $liste_numeros;
         }
-        return $liste_numeros;
+        return new JsonResponse([
+            'success'=>false,
+            'code'=>108,
+            'message' =>  'Aucun parc fixe trouvé',
+            ]);
     }
     public function getlisteAgences($agences_entreprise){
         $agences = array();
@@ -44,7 +55,11 @@ class EntrepriseMapping {
             }
             return new JsonResponse([$this->success=>true,
                                     $this->data=$agences]);
-        }
+        } return new JsonResponse([
+            'success'=>false,
+            'code'=>102,
+            'message' =>  'Aucune agence trouvée',
+            ]);
     }
     public function getlisteNumeroAssistants($numeroAssistants){
         $assistants = array();
@@ -59,6 +74,11 @@ class EntrepriseMapping {
         return new JsonResponse([$this->success=>true,
         $this->data=$assistants]);
         }
+        return new JsonResponse([
+            'success'=>false,
+            'code'=>103,
+            'message' =>  'Pas de numéros de service d\'assistances trouvé',
+            ]);
     }
     public function getlisteHoraires($horaires_entreprise) {
         $horaires = array();
@@ -68,8 +88,13 @@ class EntrepriseMapping {
                                     'heureFermeture'=>$horaire->getHeureFermeture(),
                                     'jour'=>$horaire->getJour());
             }
+            return $horaires;
         }
-        return $horaires;
+        return new JsonResponse([
+            'success'=>false,
+            'code'=>104,
+            'message' =>  'Pas de liste d\'horaire pour cette entreprise',
+            ]);
     }
     public function getlisteRegion($regions) {
         $liste_regions = array();
@@ -78,15 +103,21 @@ class EntrepriseMapping {
                 $liste_regions[] =array('id'=> $region->getId(),
                                          'nom'=> $region->getLibelle());
             }
+            return  $liste_regions;
         }
-        return  $liste_regions;
+        return new JsonResponse([
+            'success'=>false,
+            'code'=>105,
+            'message' =>  'Aucune region disponible',
+            ]);
     }
  
     public function infosEntreprise($entreprise) {
         if($entreprise == null){
             return new JsonResponse([
                 $this->success=>false,
-                $this->message=>'L\'entreprise n\'existe pas']);
+                $this->code=>106,
+                $this->message=>'Entreprise non trouvée']);
         }
         $region = null;
         $commune = null;

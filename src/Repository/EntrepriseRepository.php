@@ -65,9 +65,9 @@ class EntrepriseRepository extends ServiceEntityRepository
 	    ->setParameter('nom', '%'.$nom.'%');
         if($region!=null){
          $query->andWhere('l.libelle  LIKE :region')
-               ->andWhere('t.id  =:id')
-               ->setParameter('region', '%'.$region.'%')
-               ->setParameter('id', 2);
+              // ->andWhere('t.id  =:id')
+               ->setParameter('region', '%'.$region.'%');
+               //->setParameter('id', 2);
         }
         if($domaine!=null){
             $query->andWhere('d.nom  LIKE :domaine')
