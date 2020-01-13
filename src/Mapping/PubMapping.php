@@ -17,7 +17,8 @@ class PubMapping {
                     'id' =>$pub->getId(),
                     'urlImage' =>$pub->getUrlImage(),
                     'urlSiteWeb'=>$pub->getUrlWebsite(),
-                    'description'=>$pub->getDescription());
+                    'description'=>$pub->getDescription(),
+                    'type'=>$pub->getType());
            }
         return new JsonResponse([
             $this->success=>true,
