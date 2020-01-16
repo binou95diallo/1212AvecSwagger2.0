@@ -16,7 +16,7 @@ class IndicatifMapping {
                 $this->success=>true,
                 $this->data=>array(
                                     'id' =>$indicatif->getId(),
-                                    'indicatif' =>$indicatif->getIndicatif(),
+                                    'indicatif' =>$indicatif->getIndicatifs(),
                                     'pays'=>$indicatif->getPays())
                 ]);
         }

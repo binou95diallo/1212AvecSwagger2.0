@@ -14,12 +14,24 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 Use App\Annotation\QMLogger;
+Use OpenApi\Annotations as OA;
 
 class SearchController extends AbstractFOSRestController implements ClassResourceInterface
 {
   /**
      * @Rest\Post("/recherche")
      * @QMLogger(message="recherche entreprise")
+     * @OA\Post(
+        *path="/recherche",
+        *@OA\RequestBody(
+            *@OA\JsonContent(ref="#components/schemas/InputSearch"),
+        *),
+        *@OA\Response(
+        *   response="200",
+        *   description="recherche entreprise",
+        *   @OA\JsonContent(ref="#/components/schemas/Recherche")
+        *)
+    *)
      * @return JsonResponse
      */
     public function searchEntreprise(Request $request,EntrepriseRepository $entrepriseRepository) {

@@ -14,6 +14,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 Use App\Annotation\QMLogger;
+Use OpenApi\Annotations as OA;
 
 class EntrepriseController extends AbstractFOSRestController implements ClassResourceInterface
 {
@@ -21,6 +22,17 @@ class EntrepriseController extends AbstractFOSRestController implements ClassRes
      /**
      * @Rest\Post("/infos_entreprise")
      * @QMLogger(message="Details entreprise")
+     * @OA\Post(
+        *path="/infos_entreprise",
+        *@OA\RequestBody(
+            *@OA\JsonContent(ref="#components/schemas/InputInfosEnt"),
+        *),
+        *@OA\Response(
+        *   response="200",
+        *   description="Details entreprise",
+        *   @OA\JsonContent(ref="#/components/schemas/InfosEntreprise")
+        *)
+     *)
      * @return JsonResponse
      */
     public function detailsEntreprise(Request $request) {
@@ -32,6 +44,14 @@ class EntrepriseController extends AbstractFOSRestController implements ClassRes
     /**
      * @Rest\Get("/liste_regions_domaines")
      * @QMLogger(message="Liste des regions et domaines")
+     * @OA\Get(
+        *path="/liste_regions_domaines",
+        *@OA\Response(
+        *   response="200",
+        *   description="liste des regions et domaines",
+        *   @OA\JsonContent(ref="#/components/schemas/RegionDomaine")
+        *)
+     *)
      * @return JsonResponse
      */
     public function filtres(Request $request) {

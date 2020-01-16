@@ -1,0 +1,501 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "api annuaire1212",
+        "description": "api pour la plateforme de gestion de concours",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "",
+            "description": "serveur local"
+        }
+    ],
+    "paths": {
+        "/makePub": {
+            "post": {
+                "operationId": "App\\Controller\\DataController::makePub",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/InputPub"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ajout publicite",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Publicite"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pub": {
+            "get": {
+                "operationId": "App\\Controller\\DataController::pub",
+                "responses": {
+                    "200": {
+                        "description": "liste des publicites",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Pubs"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/listeAgences": {
+            "get": {
+                "operationId": "App\\Controller\\DataController::listeAgences",
+                "responses": {
+                    "200": {
+                        "description": "liste des agences",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Agences"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/listeAssistants": {
+            "get": {
+                "operationId": "App\\Controller\\DataController::listeNumerosAssistant",
+                "responses": {
+                    "200": {
+                        "description": "liste numeros assistants",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Assistants"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/indicatifs": {
+            "post": {
+                "operationId": "App\\Controller\\DataController::indicatifsPays",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/InputIndicatif"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "liste indicatifs",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Indicatifs"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/infos_entreprise": {
+            "post": {
+                "operationId": "App\\Controller\\EntrepriseController::detailsEntreprise",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/InputInfosEnt"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Details entreprise",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InfosEntreprise"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/liste_regions_domaines": {
+            "get": {
+                "operationId": "App\\Controller\\EntrepriseController::filtres",
+                "responses": {
+                    "200": {
+                        "description": "liste des regions et domaines",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegionDomaine"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recherche": {
+            "post": {
+                "operationId": "App\\Controller\\SearchController::searchEntreprise",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/InputSearch"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "recherche entreprise",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Recherche"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Assistants": {
+                "description": "numeros assistants",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "numero": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Agences": {
+                "description": "Liste des agences",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "type": "string"
+                    },
+                    "adresse": {
+                        "type": "string"
+                    },
+                    "localite": {
+                        "type": "string"
+                    },
+                    "latittude": {
+                        "type": "string"
+                    },
+                    "longitude": {
+                        "type": "string"
+                    },
+                    "fixe": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Pubs": {
+                "description": "Liste des publicites",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "urlImage": {
+                        "type": "string"
+                    },
+                    "urlSiteWeb": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "RegionDomaine": {
+                "description": "Liste des publicites",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "InputInfosEnt": {
+                "description": "saisi de l'id de l'entreprise",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "InfosEntreprise": {
+                "description": "details entreprise",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "type": "string"
+                    },
+                    "adresse": {
+                        "type": "string"
+                    },
+                    "fixe": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "type": "string"
+                    },
+                    "mobile": {
+                        "type": "string"
+                    },
+                    "fax": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "web": {
+                        "type": "string"
+                    },
+                    "instagram": {
+                        "type": "string"
+                    },
+                    "facebook": {
+                        "type": "string"
+                    },
+                    "twitter": {
+                        "type": "string"
+                    },
+                    "latitude": {
+                        "type": "string"
+                    },
+                    "longitude": {
+                        "type": "string"
+                    },
+                    "boitepostale": {
+                        "type": "string"
+                    },
+                    "quartier": {
+                        "type": "string"
+                    },
+                    "rue": {
+                        "type": "string"
+                    },
+                    "horaires": {
+                        "type": "object"
+                    },
+                    "agences": {
+                        "type": "object"
+                    },
+                    "domaine": {
+                        "type": "object"
+                    },
+                    "parcnumero": {
+                        "type": "object"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "commune": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "InputPub": {
+                "description": "ajout publicite",
+                "properties": {
+                    "urlImage": {
+                        "type": "string"
+                    },
+                    "urlWebsite": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Publicite": {
+                "description": "Output publicite",
+                "properties": {
+                    "sucess": {
+                        "type": "boolean"
+                    },
+                    "code": {
+                        "type": "integer"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "InputIndicatif": {
+                "description": "input indicatif",
+                "properties": {
+                    "pays": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Indicatifs": {
+                "description": "Indicatif pays",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "pays": {
+                        "type": "string"
+                    },
+                    "indicatif": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "InputSearch": {
+                "description": "Recherche",
+                "properties": {
+                    "nom": {
+                        "type": "string"
+                    },
+                    "region": {
+                        "type": "string"
+                    },
+                    "domaine": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Recherche": {
+                "description": "Recherche entreprise",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "nom": {
+                        "type": "string"
+                    },
+                    "adresse": {
+                        "type": "string"
+                    },
+                    "fixe": {
+                        "type": "string"
+                    },
+                    "logo": {
+                        "type": "string"
+                    },
+                    "domaine": {
+                        "type": "object"
+                    },
+                    "region": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "Not found": {
+                "description": "la ressource n'existe pas",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "article not found"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "id": {
+                "name": "id",
+                "in": "path",
+                "description": "ID du concours",
+                "required": true,
+                "schema": {
+                    "type": "integer"
+                }
+            },
+            "username": {
+                "name": "username",
+                "in": "query",
+                "description": "nom d'utilisateur",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "password": {
+                "name": "password",
+                "in": "query",
+                "description": "mot de pass utilisateur",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

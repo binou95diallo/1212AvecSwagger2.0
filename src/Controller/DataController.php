@@ -22,6 +22,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 Use App\Annotation\QMLogger;
+Use OpenApi\Annotations as OA;
 
 class DataController extends AbstractController
 {
@@ -32,6 +33,17 @@ class DataController extends AbstractController
     /**
      * @Rest\Post("/makePub", name="makePub")
      * @QMLogger(message="Ajouter une publicite")
+     * @OA\Post(
+        *path="/makePub",
+        *@OA\RequestBody(
+            *@OA\JsonContent(ref="#components/schemas/InputPub"),
+        *),
+        *@OA\Response(
+        *   response="200",
+        *   description="Ajout publicite",
+        *   @OA\JsonContent(ref="#/components/schemas/Publicite")
+        *)
+     *)
      */
     public function makePub(Request $request,EntityManagerInterface $em)
     {
@@ -50,6 +62,14 @@ class DataController extends AbstractController
     /**
      * @Rest\Get("/pub", name="pub")
      * @QMLogger(message="Liste des publicites")
+     * @OA\Get(
+        *path="/pub",
+        *@OA\Response(
+        *   response="200",
+        *   description="liste des publicites",
+        *   @OA\JsonContent(ref="#/components/schemas/Pubs")
+        *)
+     *)
      */
     public function pub(Request $request,EntityManagerInterface $em,PubliciteRepository $publiciteRepository)
     {
@@ -61,6 +81,14 @@ class DataController extends AbstractController
      /**
      * @Rest\Get("/listeAgences", name="listeAgences")
      * @QMLogger(message="Liste des agences")
+     * @OA\Get(
+        *path="/listeAgences",
+        *@OA\Response(
+        *   response="200",
+        *   description="liste des agences",
+        *   @OA\JsonContent(ref="#/components/schemas/Agences")
+        *)
+     *)
      */
     public function listeAgences(AgenceRepository $agenceRepository)
     {
@@ -71,6 +99,14 @@ class DataController extends AbstractController
     /**
     * @Rest\Get("/listeAssistants", name="listeAssistants")
     * @QMLogger(message="Liste des numeros services assistances")
+    * @OA\Get(
+        *path="/listeAssistants",
+        *@OA\Response(
+        *   response="200",
+        *   description="liste numeros assistants",
+        *   @OA\JsonContent(ref="#/components/schemas/Assistants")
+        *)
+    *)
     */
    public function listeNumerosAssistant(AssistantsRepository $assistantsRepository)
    {
@@ -82,6 +118,17 @@ class DataController extends AbstractController
     /**
      * @Rest\Post("/indicatifs", name="rechercheIndicatifs")
      * @QMLogger(message="Indicatifs des pays")
+     * @OA\Post(
+        *path="/indicatifs",
+        *@OA\RequestBody(
+            *@OA\JsonContent(ref="#components/schemas/InputIndicatif"),
+        *),
+        *@OA\Response(
+        *   response="200",
+        *   description="liste indicatifs",
+        *   @OA\JsonContent(ref="#/components/schemas/Indicatifs")
+        *)
+    *)
      */
     public function indicatifsPays(Request $request,ListeIndicatifsRepository $listeIndicatifsRepository){
         $value=$request->request->all();

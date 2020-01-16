@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a97a48ead87bc16033bd9a1726f3561",
+    "content-hash": "3ca64abd53503065c276a92dc066ef59",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -6385,26 +6385,26 @@
         },
         {
             "name": "zircote/swagger-php",
-            "version": "3.0.3",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zircote/swagger-php.git",
-                "reference": "c86386bd623ffad6f7e6f9269bf51d42d2797012"
+                "reference": "67f517375c0c8180bf2c09dbad6f305524cff2ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/c86386bd623ffad6f7e6f9269bf51d42d2797012",
-                "reference": "c86386bd623ffad6f7e6f9269bf51d42d2797012",
+                "url": "https://api.github.com/repos/zircote/swagger-php/zipball/67f517375c0c8180bf2c09dbad6f305524cff2ab",
+                "reference": "67f517375c0c8180bf2c09dbad6f305524cff2ab",
                 "shasum": ""
             },
             "require": {
                 "doctrine/annotations": "*",
-                "php": ">=7.2",
+                "php": ">=7.0",
                 "symfony/finder": ">=2.2",
-                "symfony/yaml": ">=3.3"
+                "symfony/yaml": ">=2.8"
             },
             "require-dev": {
-                "phpunit/phpunit": ">=8",
+                "phpunit/phpunit": ">=6.3",
                 "squizlabs/php_codesniffer": ">=3.3",
                 "zendframework/zend-form": "<2.8"
             },
@@ -6444,7 +6444,7 @@
                 "rest",
                 "service discovery"
             ],
-            "time": "2019-11-30T13:35:44+00:00"
+            "time": "2018-08-16T06:06:29+00:00"
         }
     ],
     "packages-dev": [

@@ -15,6 +15,7 @@ class PubliciteType extends AbstractType
             ->add('urlImage')
             ->add('urlWebsite')
             ->add('description')
+            ->add('type')
         ;
     }
 
