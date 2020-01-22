@@ -14,7 +14,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 Use App\Annotation\QMLogger;
-Use OpenApi\Annotations as OA;
+Use Swagger\Annotations as SWG;
 
 class EntrepriseController extends AbstractFOSRestController implements ClassResourceInterface
 {
@@ -22,15 +22,16 @@ class EntrepriseController extends AbstractFOSRestController implements ClassRes
      /**
      * @Rest\Post("/infos_entreprise")
      * @QMLogger(message="Details entreprise")
-     * @OA\Post(
+     * @SWG\Post(
         *path="/infos_entreprise",
-        *@OA\RequestBody(
-            *@OA\JsonContent(ref="#components/schemas/InputInfosEnt"),
-        *),
-        *@OA\Response(
+        *consumes={"multipart/form-data"},
+        *parameters={
+            *@Swg\Parameter(name="id", in="formData", description="Id de l'entreprise", type="string"),
+        *},
+        *@Swg\Response(
         *   response="200",
         *   description="Details entreprise",
-        *   @OA\JsonContent(ref="#/components/schemas/InfosEntreprise")
+        *   schema=@Swg\Schema(type="object",ref="#/definitions/default")
         *)
      *)
      * @return JsonResponse
@@ -44,12 +45,12 @@ class EntrepriseController extends AbstractFOSRestController implements ClassRes
     /**
      * @Rest\Get("/liste_regions_domaines")
      * @QMLogger(message="Liste des regions et domaines")
-     * @OA\Get(
+     * @SWG\Get(
         *path="/liste_regions_domaines",
-        *@OA\Response(
+        *@Swg\Response(
         *   response="200",
         *   description="liste des regions et domaines",
-        *   @OA\JsonContent(ref="#/components/schemas/RegionDomaine")
+        *   schema=@Swg\Schema(type="object",ref="#/definitions/default")
         *)
      *)
      * @return JsonResponse

@@ -11,7 +11,7 @@ use OpenApi\Annotations as OA;
  * @OA\schema(
  *      schema="Assistants",
  *      description="numeros assistants",
- *      @OA\Property(type="integer", property="id"),
+ *      @OA\Property(type="integer",property="id"),
  *      @OA\Property(type="string",property="numero")
  * ),
  * @OA\schema(

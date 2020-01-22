@@ -1,12 +1,9 @@
 <?php
- use OpenApi\Annotations as OA;
+ use Swagger\Annotations as SWG;
 
  /**
-  * @OA\Info(title="api annuaire1212",version="0.1",
-  *          description="api pour la plateforme de gestion de concours")
-  * @OA\Server(
-      *url="",
-      *description="serveur local"
-  *)
+  * @SWG\Info(title="api annuaire1212",version="0.1",
+  *          description="api pour la plateforme de gestion d'annuaire des entreprise"),
+  *@SWG\Swagger(host="extra.apis2m.sn",basePath="/annuaire1212",schemes={"https"})
   */
 ?>
