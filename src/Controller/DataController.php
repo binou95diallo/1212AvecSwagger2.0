@@ -22,6 +22,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 Use App\Annotation\QMLogger;
+use App\Repository\LocaliteRepository;
 Use Swagger\Annotations as SWG;
 
 class DataController extends AbstractController
@@ -99,8 +100,9 @@ class DataController extends AbstractController
     public function listeAgences(AgenceRepository $agenceRepository)
     {
         $listeAgence=$agenceRepository->findAll();
+        $nombreEntreprise=$agenceRepository->countEntreprise();
         $entrepriseMapping=new EntrepriseMapping();
-        return $entrepriseMapping->getlisteAgences($listeAgence);
+        return $entrepriseMapping->getlisteAgences($listeAgence,$nombreEntreprise);
     }
     /**
     * @Rest\Get("/listeAssistants", name="listeAssistants")
@@ -154,5 +156,36 @@ class DataController extends AbstractController
             $indicatifsMapping=new IndicatifMapping();
             return $indicatifsMapping->getlisteIndicatifs($indicatifs);
         }
+    }
+
+     /**
+     * @Rest\Post("/entrepriseByRegions", name="entrepriseByRegions")
+     * @QMLogger(message="Liste des entreprises par region")
+     * @SWG\Post(
+        *path="/entrepriseByRegions",
+        *consumes={"multipart/form-data"},
+        *parameters={
+        *@Swg\Parameter(name="idRegion", in="formData", description="Id de la region", type="integer")
+        *},
+        *@SWG\Response(
+        *   response="200",
+        *   description="liste des entreprises par region",
+        *   schema=@Swg\Schema(type="object",
+        *   ref="#/definitions/default")
+        *)
+    *)
+     */
+    public function getEntrepriseByRegion(Request $request,LocaliteRepository $localiteRepository){
+        $value=$request->request->all();
+        $region=$localiteRepository->find($value["idRegion"]);
+        $entreprises=$region->getEntreprises();
+        if($entreprises!=null){
+            $listeEntreprises=array();
+            $entrepriseMapping=new EntrepriseMapping();
+            foreach ($entrepriseMapping as $entreprise) {
+                $listeEntreprises[]=$entrepriseMapping->listeEntrepriseByRegion($entreprise);
+            }
+        }
+
     }
 }

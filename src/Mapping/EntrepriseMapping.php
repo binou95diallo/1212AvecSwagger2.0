@@ -9,6 +9,7 @@ class EntrepriseMapping {
     protected $message = 'message';
     protected $data = 'data';
     protected $code='code';
+    protected $nombreEntreprise='nombres entreprises';
 
     public function getlisteDomaines($domaines_entreprise) {
         $domaines = array();
@@ -41,7 +42,7 @@ class EntrepriseMapping {
             'message' =>  'Aucun parc fixe trouvé',
             ]);
     }
-    public function getlisteAgences($agences_entreprise){
+    public function getlisteAgences($agences_entreprise,$nombreEntreprise=null){
         $agences = array();
         if($agences_entreprise){
             foreach ($agences_entreprise as  $agence_entreprise){
@@ -54,7 +55,8 @@ class EntrepriseMapping {
                                    'fixe'=>$agence_entreprise->getFixe());
             }
             return new JsonResponse([$this->success=>true,
-                                    $this->data=$agences]);
+                                    $this->data=>$agences,
+                                    $this->nombreEntreprise=>$nombreEntreprise]);
         } return new JsonResponse([
             'success'=>false,
             'code'=>102,
@@ -96,14 +98,17 @@ class EntrepriseMapping {
             'message' =>  'Pas de liste d\'horaire pour cette entreprise',
             ]);
     }
-    public function getlisteRegion($regions) {
+    public function getlisteRegion($regions,$nombreEntreprise=null) {
         $liste_regions = array();
         if($regions){
             foreach ($regions as $region){
                 $liste_regions[] =array('id'=> $region->getId(),
-                                         'nom'=> $region->getLibelle());
+                                         'nom'=> $region->getLibelle(),    
+                                         $this->nombreEntreprise=>$nombreEntreprise);
             }
-            return  $liste_regions;
+        return new JsonResponse([
+            $this->success=>true,
+            $this->data=>$liste_regions]);
         }
         return new JsonResponse([
             'success'=>false,
@@ -171,5 +176,22 @@ class EntrepriseMapping {
                     'domaine' =>$this->getlisteDomaines($domaines))
             ]);
         
+    }
+
+    public function listeEntrepriseByRegion($entreprise){
+        if($entreprise!=null){
+            return new JsonResponse([
+                $this->success=>true,
+                $this->data=>array(
+                                    'id' =>$entreprise->getId(),
+                                    'nom' =>$entreprise->getNom(),
+                                    'logo'=>$entreprise->getLogo())]);
+        }
+        else{
+            return new JsonResponse([
+                $this->success=>false,
+                $this->code=>106,
+                $this->message=>'Cette region ne dispose pas encore d\'entreprise']);
+        }
     }
 }   

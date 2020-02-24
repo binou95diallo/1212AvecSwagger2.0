@@ -47,4 +47,15 @@ class LocaliteRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function countEntreprise()
+    {
+        $qb = $this->createQueryBuilder('l')
+              ->select('l.entreprise')->distinct()
+              ->groupBy('l.entreprise');
+     
+        $qb ->select($qb->expr()->count('l.entreprise'));
+     
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }

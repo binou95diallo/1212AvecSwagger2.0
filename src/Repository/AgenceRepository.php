@@ -47,4 +47,15 @@ class AgenceRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function countEntreprise()
+    {
+        $qb = $this->createQueryBuilder('a')
+              ->select('a.entreprise')->distinct()
+              ->groupBy('a.entreprise');
+     
+        $qb ->select($qb->expr()->count('a.entreprise'));
+     
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }
